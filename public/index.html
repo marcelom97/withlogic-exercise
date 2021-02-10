@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Order Array of words</title>
+    <style>
+      .row {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+      }
+
+      .box {
+        width: 300px;
+        height: 300px;
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="row">
+      <textarea name="text" id="text" cols="40" rows="10"></textarea>
+      <div id="results" class="box"></div>
+    </div>
+    <div class="row">
+      <button type="submit" id="submit-btn">Submit</button>
+    </div>
+    <script>
+      const submitBtn = document.querySelector('#submit-btn');
+      const textArea = document.querySelector('textarea');
+      const results = document.querySelector('#results');
+
+      function processInputData(text) {
+        // TODO: add regex to split in new line and in space
+        return text.split('\n');
+      }
+
+      function loading() {
+        submitBtn.setAttribute('disabled', true);
+        results.innerText = 'Loading...';
+      }
+
+      function showResults(data) {
+        console.log(data);
+        submitBtn.removeAttribute('disabled');
+        results.innerText = data.toString().replaceAll(',', '\n');
+      }
+
+      async function handleSubmit(data) {
+        try {
+          const res = await fetch('/api/sort', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+          });
+
+          if (res.status === 200) {
+            const data = await res.json();
+            showResults(data);
+          }
+
+          if (res.status === 400) {
+            const data = await res.json();
+            alert(data.message);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+
+      submitBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        loading();
+        handleSubmit(processInputData(textArea.value));
+      });
+    </script>
+  </body>
+</html>
