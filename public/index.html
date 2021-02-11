@@ -47,15 +47,17 @@
     </style>
   </head>
   <body>
-    <div class="row">
-      <textarea name="text" class="shadow" cols="40"></textarea>
-      <div id="results" class="box shadow"></div>
-    </div>
-    <div class="row btn-container">
-      <button class="btn" type="submit" id="submit-btn">Submit</button>
-    </div>
+    <form>
+      <div class="row">
+        <textarea name="text" class="shadow" cols="40"></textarea>
+        <div id="results" class="box shadow"></div>
+      </div>
+      <div class="row btn-container">
+        <button class="btn" type="submit">Submit</button>
+      </div>
+    </form>
     <script>
-      const submitBtn = document.querySelector('#submit-btn');
+      const submitBtn = document.querySelector('button');
       const textArea = document.querySelector('textarea');
       const results = document.querySelector('#results');
 
