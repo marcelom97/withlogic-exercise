@@ -1,4 +1,4 @@
-// TODO: refactor and commenting
+// TODO: refactor and commentings
 
 /**
  * Returns the ascii code of the characted with index i in the string
