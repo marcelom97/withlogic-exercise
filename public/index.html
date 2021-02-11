@@ -34,17 +34,20 @@
 
       function processInputData(text) {
         // TODO: add regex to split in new line and in space
-        return text.split('\n');
+        return text.split('\n').filter((el) => {
+          return el !== '' ? el : null;
+        });
       }
 
       function loading() {
         submitBtn.setAttribute('disabled', true);
-        results.innerText = 'Loading...';
+        submitBtn.innerText = 'Loading...';
       }
 
       function showResults(data) {
         console.log(data);
         submitBtn.removeAttribute('disabled');
+        submitBtn.innerText = 'Submit';
         results.innerText = data.toString().replaceAll(',', '\n');
       }
 
@@ -66,6 +69,7 @@
           if (res.status === 400) {
             const data = await res.json();
             alert(data.message);
+            showResults();
           }
         } catch (error) {
           console.log(error);
