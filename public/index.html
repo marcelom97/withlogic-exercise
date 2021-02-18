@@ -62,26 +62,32 @@
       const results = document.querySelector('#results');
 
       function processInputData(text) {
-        // TODO: add regex to split in new line and in space
         return text.split('\n').filter((el) => {
-          return el !== '' ? el : null;
+          return el !== '' ? true : false;
         });
       }
 
-      function loading() {
-        submitBtn.setAttribute('disabled', true);
-        submitBtn.innerText = 'Loading...';
+      function setLoading(isLoading) {
+        if (isLoading) {
+          submitBtn.setAttribute('disabled', true);
+          submitBtn.innerText = 'Loading...';
+        }
+        if (!isLoading) {
+          submitBtn.removeAttribute('disabled');
+          submitBtn.innerText = 'Submit';
+        }
       }
 
       function showResults(data) {
-        console.log(data);
-        submitBtn.removeAttribute('disabled');
-        submitBtn.innerText = 'Submit';
-        results.innerText = data.toString().replaceAll(',', '\n');
+        results.innerText = '';
+        for (let i = 0; i < data.length; i++) {
+          results.innerText += data[i] + '\n';
+        }
       }
 
       async function handleSubmit(data) {
         try {
+          setLoading(true);
           const res = await fetch('/api/sort', {
             method: 'POST',
             headers: {
@@ -92,13 +98,23 @@
 
           if (res.status === 200) {
             const data = await res.json();
+            setLoading(false);
             showResults(data);
+            return;
           }
 
           if (res.status === 400) {
             const data = await res.json();
             alert(data.message);
-            showResults();
+            setLoading(false);
+            return;
+          }
+
+          // Fetch promises only reject with a TypeError when a network error occurs
+          // so I am handling them manualy and not at the catch
+          if (res.status > 400 && res.status < 600) {
+            alert('Something went wrong!');
+            setLoading(false);
           }
         } catch (error) {
           console.log(error);
@@ -107,7 +123,6 @@
 
       submitBtn.addEventListener('click', function (e) {
         e.preventDefault();
-        loading();
         handleSubmit(processInputData(textArea.value));
       });
     </script>
