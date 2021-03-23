@@ -1,4 +1,6 @@
-from django.http import JsonResponse, HttpResponseBadRequest
+from django.http import JsonResponse
+from rest_framework.response import Response
+from rest_framework import status
 from django.shortcuts import render
 from rest_framework.views import APIView
 
@@ -6,7 +8,7 @@ from .utils import sort
 
 
 def index(request):
-    return render(request, 'home.html')
+    return render(request, "home.html")
 
 
 class SortView(APIView):
@@ -14,7 +16,8 @@ class SortView(APIView):
         data = request.data
 
         if type(data) != list:
-            return HttpResponseBadRequest()
+            content = {"error": "Bad input, the data must be an array of strings."}
+            return Response(data=content, status=status.HTTP_400_BAD_REQUEST)
 
         sorted_data = sort(data)
-        return JsonResponse(data=sorted_data, safe=False)
+        return Response(data=sorted_data)
