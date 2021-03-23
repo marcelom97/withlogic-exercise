@@ -4,12 +4,13 @@
 <form class="mt-5">
   <div class="centered-row">
     <textarea name="text" class="input-text-area" cols="30" rows="10"></textarea>
-    <div class="output"></div>
+      <div class="output wrapped-text"></div>
   </div>
   <div class="centered-row mt-5">
     <button type="submit" id="submit-btn" class="btn btn-primary btn-sm">Submit</button>
   </div>
 </form>
-{% endblock %} {% block scripts %}
+{% endblock %} 
+{% block scripts %}
 <script src="{% static 'js/index.js' %}"></script>
 {% endblock %}

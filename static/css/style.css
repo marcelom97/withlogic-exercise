@@ -21,6 +21,10 @@
     border: 1px solid black;
 }
 
+.wrapped-text {
+    overflow-y: auto;
+}
+
 .mt {
     margin-top: 10vh;
 }
