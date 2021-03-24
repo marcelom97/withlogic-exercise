@@ -1,0 +1,30 @@
+.custom-container {
+    display: flex;
+    justify-content: center;
+}
+
+.centered-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.input-text-area {
+    width: 20vw;
+    height: 25vh;
+    resize: none;
+}
+
+.output {
+    width: 20vw;
+    height: 25vh;
+    border: 1px solid black;
+}
+
+.wrapped-text {
+    overflow-y: auto;
+}
+
+.mt {
+    margin-top: 10vh;
+}

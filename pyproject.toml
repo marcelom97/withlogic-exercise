@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "junior-web-dev-exercise"
+version = "0.1.0"
+description = "interview assignment @ Logic"
+authors = ["marcelom97 <marcelomollaj@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+Django = "^3.1.7"
+djangorestframework = "^3.12.2"
+python-dotenv = "^0.15.0"
+
+[tool.poetry.dev-dependencies]
+black = "^20.8b1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
