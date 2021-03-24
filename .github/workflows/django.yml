@@ -27,7 +27,7 @@ jobs:
           poetry-version: ${{ matrix.poetry-version }}
       - name: Install Dependencies
         run: |
-          mv .env.samlpe .env
+          mv .env.sample .env
           poetry install
       - name: Lint with black
         run: |
