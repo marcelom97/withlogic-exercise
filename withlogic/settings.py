@@ -18,7 +18,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 ENV_PATH = BASE_DIR / ".env"
 
-load_dotenv(dotenv_path=ENV_PATH)
+if os.path.exists(ENV_PATH):
+    load_dotenv(dotenv_path=ENV_PATH)
+else:
+    print("Please create a .env file and add your environment variables")
+    print("Because .env does not exists the program is using .env.sample")
+    ENV_PATH = BASE_DIR / ".env.sample"
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
