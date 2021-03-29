@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Order Array of words</title>
+    <style>
+      body {
+        background-color: coral;
+      }
+
+      .row {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+      }
+
+      .box {
+        width: 300px;
+        height: 200px;
+        margin-left: 20px;
+        border: 1px solid black;
+        background-color: white;
+      }
+
+      .btn {
+        width: 80px;
+        height: 30px;
+        border-radius: 0.3rem;
+        background: rgba(0, 0, 255, 0.2);
+        color: white;
+      }
+
+      .btn:hover {
+        cursor: pointer;
+        box-shadow: 4px 4px 2px 1px rgba(0, 0, 255, 0.2);
+      }
+
+      .btn-container {
+        margin-top: 10%;
+      }
+
+      .shadow {
+        box-shadow: 12px 12px 2px 1px rgba(0, 0, 255, 0.2);
+      }
+    </style>
+  </head>
+  <body>
+    <form>
+      <div class="row">
+        <textarea name="text" class="shadow" cols="40"></textarea>
+        <div id="results" class="box shadow"></div>
+      </div>
+      <div class="row btn-container">
+        <button class="btn" type="submit">Submit</button>
+      </div>
+    </form>
+    <script>
+      const submitBtn = document.querySelector('button');
+      const textArea = document.querySelector('textarea');
+      const results = document.querySelector('#results');
+
+      function processInputData(text) {
+        return text.split('\n').filter((el) => {
+          return el !== '' ? true : false;
+        });
+      }
+
+      function setLoading(isLoading) {
+        if (isLoading) {
+          submitBtn.setAttribute('disabled', true);
+          submitBtn.innerText = 'Loading...';
+        }
+        if (!isLoading) {
+          submitBtn.removeAttribute('disabled');
+          submitBtn.innerText = 'Submit';
+        }
+      }
+
+      function showResults(data) {
+        results.innerText = '';
+        for (let i = 0; i < data.length; i++) {
+          results.innerText += data[i] + '\n';
+        }
+      }
+
+      async function handleSubmit(data) {
+        try {
+          setLoading(true);
+          const res = await fetch('/api/sort', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+          });
+
+          if (res.status === 200) {
+            const data = await res.json();
+            setLoading(false);
+            showResults(data);
+            return;
+          }
+
+          if (res.status === 400) {
+            const data = await res.json();
+            alert(data.message);
+            setLoading(false);
+            return;
+          }
+
+          // Fetch promises only reject with a TypeError when a network error occurs
+          // so I am handling them manualy and not at the catch
+          if (res.status > 400 && res.status < 600) {
+            alert('Something went wrong!');
+            setLoading(false);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+
+      submitBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        handleSubmit(processInputData(textArea.value));
+      });
+    </script>
+  </body>
+</html>

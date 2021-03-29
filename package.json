@@ -1,0 +1,29 @@
+{
+  "name": "junior-web-dev-exercise",
+  "version": "1.0.0",
+  "description": "This is the exercise for the Junior Web Developer position at LOGIC. The objective of this exercise is to create a web application.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marcelom97/withlogic-exercise.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marcelom97/withlogic-exercise/issues"
+  },
+  "homepage": "https://github.com/marcelom97/withlogic-exercise#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.7"
+  }
+}
